@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>TrascapathianGovernmentMapSolutions</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
+<link rel="stylesheet" href="style.css">
+<style>
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+</style>
+</head>
+<body>
+
+
+<div id="map"></div>
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1IjoiZGlneWRlcCIsImEiOiJjbGYxNDQwMTIwNHJkM3hyMGdzYzM0djFjIn0.7jGv0vgJNN3BdxdQZoQY4g';
+  //const bounds = [
+  //  [22.06211,47.86616], // Southwest coordinates
+  //  [24.7041023,49.12407]  // Northeast coordinates  
+  //];
+  const map = new mapboxgl.Map({
+container: 'map', // container ID
+// Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+style: 'mapbox://styles/digydep/clgmlyh5u00cq01qxd7u0a0mx', // style URL
+//center: [23.290417,48.392914], // starting position [lng, lat]
+//zoom: 8.26, // starting zoom
+//maxBounds: bounds 
+});
+
+map.on('load', function () {
+    // Add a layer showing the state polygons.
+    map.addLayer({
+        "id": 'dzk2'
+		//'description':'PIB',
+		
+    });
+
+    map.on('mouseenter', 'dzk2', function () {
+        map.getCanvas().style.cursor = 'pointer';
+    });
+
+    map.on('mouseleave', 'dzk2', function () {
+        map.getCanvas().style.cursor = '';
+    });
+
+   // map.setLayoutProperty('dzk2', 'visibility', 'visible');
+
+    map.on('click', 'dzk2', function (e) {
+		new mapboxgl.Popup()
+            .setLngLat(e.lngLat)
+    		.setHTML(e.features[0].properties.cad+'</p>'+ e.features[0].properties.area+'</p>'+ e.features[0].properties.owner)
+            .addTo(map);
+    });
+
+});
+
+    
+</script>
+ 
+</body>
+</html>
